@@ -1,0 +1,13 @@
+/home/justin/Code/REPO-Mods/PourDecisions/PourDecisions/obj/Release/PourDecisions.csproj.AssemblyReference.cache
+/home/justin/Code/REPO-Mods/PourDecisions/PourDecisions/obj/Release/PourDecisions.GeneratedMSBuildEditorConfig.editorconfig
+/home/justin/Code/REPO-Mods/PourDecisions/PourDecisions/obj/Release/PourDecisions.AssemblyInfoInputs.cache
+/home/justin/Code/REPO-Mods/PourDecisions/PourDecisions/obj/Release/PourDecisions.AssemblyInfo.cs
+/home/justin/Code/REPO-Mods/PourDecisions/PourDecisions/obj/Release/PourDecisions.csproj.CoreCompileInputs.cache
+/home/justin/.local/share/com.kesomannen.gale/repo/profiles/Developer/BepInEx/plugins/PourDecisions/PourDecisions.deps.json
+/home/justin/.local/share/com.kesomannen.gale/repo/profiles/Developer/BepInEx/plugins/PourDecisions/PourDecisions.dll
+/home/justin/.local/share/com.kesomannen.gale/repo/profiles/Developer/BepInEx/plugins/PourDecisions/PourDecisions.pdb
+/home/justin/Code/REPO-Mods/PourDecisions/PourDecisions/obj/Release/PourDecisions.dll
+/home/justin/Code/REPO-Mods/PourDecisions/PourDecisions/obj/Release/PourDecisions.pdb
+/home/justin/.local/share/com.kesomannen.gale/repo/profiles/SurvivalEnhancedUpdatedPlus2026CosmeticDeluxeEdition/BepInEx/plugins/PourDecisions/PourDecisions.deps.json
+/home/justin/.local/share/com.kesomannen.gale/repo/profiles/SurvivalEnhancedUpdatedPlus2026CosmeticDeluxeEdition/BepInEx/plugins/PourDecisions/PourDecisions.dll
+/home/justin/.local/share/com.kesomannen.gale/repo/profiles/SurvivalEnhancedUpdatedPlus2026CosmeticDeluxeEdition/BepInEx/plugins/PourDecisions/PourDecisions.pdb
