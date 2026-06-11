@@ -207,8 +207,15 @@ namespace PourDecisions.Services
             }
         }
 
-        private static string Escape(string s) => s.Replace("~", "").Replace(";", "").Replace("=", "").Replace("|", "");
-        private static string Unescape(string s) => s;
+        // Frame-safe and lossless: percent-encoding handles the delimiters, and the
+        // one character RFC 3986 leaves alone that we also use as a delimiter (~)
+        // gets encoded by hand.
+        private static string Escape(string s) => Uri.EscapeDataString(s).Replace("~", "%7E");
+        private static string Unescape(string s)
+        {
+            try { return Uri.UnescapeDataString(s); }
+            catch (UriFormatException) { return s; }
+        }
 
         // ---- career + play-date streak ----
 

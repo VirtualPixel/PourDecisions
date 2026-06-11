@@ -80,8 +80,8 @@ namespace PourDecisions.Configuration
             Ruleset = config.Bind(SGeneral, "Ruleset", PresetStandard, new ConfigDescription(
                 "The everyday knob. A preset fills in the numbers below; editing any number switches this to Custom.",
                 new AcceptableValueList<string>(PresetCasual, PresetStandard, PresetLastResort, PresetCustom)));
-            UnitWord = config.Bind(SGeneral, "Word for one drink", "sip",
-                "What one unit is called. Default 'sip'; use 'drink', 'shot', or 'dare' / 'push-up' for a dry game.");
+            UnitWord = config.Bind(SGeneral, "Unit word", "drink",
+                "What one unit is called. 'sip' for lighter sessions, 'shot' if you hate yourself, or 'dare' / 'push-up' for a dry game.");
             ShowTab = config.Bind(SGeneral, "Show my tab on screen", true, "Show your running tally in the corner during a run.");
             ToggleHudKey = config.Bind(SGeneral, "Hide/show overlay key", KeyCode.F7, "Hotkey to toggle the on-screen overlay.");
             // Hidden from REPOConfig (a raw KeyCode renders as a 300-entry slider). Rebind via the

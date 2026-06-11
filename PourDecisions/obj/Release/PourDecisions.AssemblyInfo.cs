@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Vippy")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e1fc416b7da1bb00348f9a5a1939cabb15b62270")]
 [assembly: System.Reflection.AssemblyProductAttribute("PourDecisions")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PourDecisions")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

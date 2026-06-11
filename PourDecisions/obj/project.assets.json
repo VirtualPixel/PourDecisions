@@ -622,7 +622,7 @@
           "lib/netstandard2.0/_._": {}
         }
       },
-      "StatsCore/0.1.0": {
+      "StatsCore/0.2.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
@@ -2701,7 +2701,7 @@
         "unityengine.modules.nuspec"
       ]
     },
-    "StatsCore/0.1.0": {
+    "StatsCore/0.2.0": {
       "type": "project",
       "path": "../../StatsCore/StatsCore/StatsCore.csproj",
       "msbuildProject": "../../StatsCore/StatsCore/StatsCore.csproj"
@@ -2712,7 +2712,7 @@
       "BepInEx.Analyzers >= 1.*",
       "BepInEx.AssemblyPublicizer.MSBuild >= 0.4.1",
       "BepInEx.Core >= 5.*",
-      "StatsCore >= 0.1.0",
+      "StatsCore >= 0.2.0",
       "UnityEngine.Modules >= 2022.3.62"
     ]
   },

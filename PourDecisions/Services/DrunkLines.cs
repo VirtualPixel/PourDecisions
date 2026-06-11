@@ -816,7 +816,7 @@ namespace PourDecisions.Services
             "i grabbed a gun off the floor i have NO idea what it does", "we all DIED and now we FIGHT about it, love that for us",
             "the crown's right THERE. i just gotta outlive you idiots.", "platform's shrinking AGAIN who keeps doing that",
             "i will betray every one of you for that crown. respectfully.", "this is just the bar fight after the funeral and i'm THRIVING",
-            "don't fall don't fall don't f— ok i'm falling", "whoever made the crown a PRIZE knew their audience (us. losers.)",
+            "don't fall don't fall don't f-- ok i'm falling", "whoever made the crown a PRIZE knew their audience (us. losers.)",
             "i found a melee weapon. i am now a THREAT. a small one.", "the loser arena is the only place i've ever felt SEEN",
         };
         internal static readonly string[] ArenaDead =

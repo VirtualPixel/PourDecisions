@@ -59,7 +59,10 @@ namespace PourDecisions.Services
             };
             if (ids != null)
                 for (int i = 0; i < ids.Length; i++)
-                    order.Add(ids[i], names != null && i < names.Length ? names[i] : ids[i]);
+                {
+                    if (string.IsNullOrEmpty(ids[i])) continue;
+                    order.Add(ids[i], names != null && i < names.Length && !string.IsNullOrEmpty(names[i]) ? names[i] : ids[i]);
+                }
             RuleEngine.ApplyOrder(order);
         }
 
