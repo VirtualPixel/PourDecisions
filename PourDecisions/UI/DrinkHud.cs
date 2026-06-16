@@ -182,6 +182,7 @@ namespace PourDecisions.UI
 
             RuleEngine.OnNewLevel();
             DrunkTexts.ResetLevel();
+            Sfx.ResetLevelSearch();   // let a cocktail that spawns on this level get picked up for the drink SFX
 
             // Back in the REAL lobby (pre-game / where new players join) = a new run - wipe the tab.
             // The truck "lobby" between levels does NOT reset; the tab is run-long.
@@ -408,7 +409,8 @@ namespace PourDecisions.UI
 
         // Actual gameplay - where drinks accrue and you settle them. Not the shop/truck.
         private static bool CanSettle() =>
-            RunManager.instance != null && (SemiFunc.RunIsLevel() || SemiFunc.RunIsArena());
+            PluginConfig.Enabled.Value
+            && RunManager.instance != null && (SemiFunc.RunIsLevel() || SemiFunc.RunIsArena());
 
         private sealed class Toast
         {

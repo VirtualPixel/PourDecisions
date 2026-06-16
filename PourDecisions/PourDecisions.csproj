@@ -119,7 +119,7 @@ namespace PourDecisions
 
   <!-- Package the Thunderstore upload zip after every Build. Skipped until an icon exists, so
        dev builds that just deploy the DLL never fail on missing packaging assets. -->
-  <Target Name="PackageMod" AfterTargets="Build" Condition="Exists('$(MSBuildProjectDirectory)/../BuildZip/icon256.png')">
+  <Target Name="PackageMod" AfterTargets="Build" Condition="Exists('$(MSBuildProjectDirectory)/../BuildZip/icon.png')">
     <PropertyGroup>
       <RepoRoot>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)/..'))</RepoRoot>
       <BuildZipParent>$(RepoRoot)/BuildZip</BuildZipParent>
@@ -135,7 +135,7 @@ namespace PourDecisions
 
     <Copy SourceFiles="$(OutputPath)PourDecisions.dll" DestinationFolder="$(StageDir)" />
     <Copy SourceFiles="$(RepoRoot)/README.md;$(RepoRoot)/CHANGELOG.md;$(SourceManifest)" DestinationFolder="$(StageDir)" />
-    <Copy SourceFiles="$(BuildZipParent)/icon256.png" DestinationFiles="$(StageDir)/icon.png" />
+    <Copy SourceFiles="$(BuildZipParent)/icon.png" DestinationFiles="$(StageDir)/icon.png" />
 
     <Delete Files="$(OutputZip)" />
     <ZipDirectory SourceDirectory="$(StageDir)" DestinationFile="$(OutputZip)" Overwrite="true" />

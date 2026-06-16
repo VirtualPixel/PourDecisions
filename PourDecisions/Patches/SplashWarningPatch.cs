@@ -18,6 +18,9 @@ namespace PourDecisions.Patches
             if (_done) return;
             _done = true;
 
+            // Disabled means fully dark: no warning, and tonight doesn't count
+            // toward the launch-day streak either
+            if (!PluginConfig.Enabled.Value) return;
             if (!PluginConfig.UsageWarning.Value) return;
 
             int streak = BarTabStats.RecordLaunchDay();

@@ -56,6 +56,7 @@ namespace PourDecisions.Configuration
         public static ConfigEntry<bool> TeamSplash = null!;
         public static ConfigEntry<bool> Sound = null!;
         public static ConfigEntry<bool> CameraEffects = null!;
+        public static ConfigEntry<bool> NameTagDrinks = null!;
 
         // --- Safety ---
         public static ConfigEntry<bool> UsageWarning = null!;
@@ -118,6 +119,8 @@ namespace PourDecisions.Configuration
             TeamSplash = config.Bind(SDisplay, "Big splash for team drinks", true, "Use the center splash for everyone-drinks moments.");
             Sound = config.Bind(SDisplay, "Sound", true, "Play game sounds with prompts.");
             CameraEffects = config.Bind(SDisplay, "Camera effects", true, "Vanilla screen-glitch feedback on drinks and when you confirm one.");
+            NameTagDrinks = config.Bind(SDisplay, "Drink count on names", true,
+                "Tag each Semibot's floating name with their running drink tally, like 'Bilbo (12)'. Everyone in the lobby sees everyone's count.");
 
             UsageWarning = config.Bind(SSafety, "Startup warning", true,
                 "Show a gentle drink-responsibly notice on startup, escalating after several days of use.");

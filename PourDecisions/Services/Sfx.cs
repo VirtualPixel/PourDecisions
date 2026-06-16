@@ -9,16 +9,22 @@ namespace PourDecisions.Services
     internal static class Sfx
     {
         private static Sound? _spill;
+        private static bool _spillSearched;   // so a cocktail-less level doesn't rescan the scene every drink
 
         // The museum martini's spill SFX - grabbed off a live ValuableCocktail when one is present
-        // (only spawns on some levels). Cached once found; falls back to the menu deny sound.
+        // (only spawns on some levels). Cached once found; falls back to the menu deny sound. A new level
+        // clears the search flag so a later cocktail still gets picked up.
         private static Sound? Spill()
         {
-            if (_spill != null) return _spill;
+            if (_spill != null || _spillSearched) return _spill;
+            _spillSearched = true;
             var cocktail = Object.FindObjectOfType<ValuableCocktail>();
             if (cocktail != null) _spill = cocktail.soundSpill;
             return _spill;
         }
+
+        // Called on each level change so a cocktail that spawns on a later level is still found.
+        public static void ResetLevelSearch() { if (_spill == null) _spillSearched = false; }
 
         public static void Drink()
         {

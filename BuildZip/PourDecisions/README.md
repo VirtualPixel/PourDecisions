@@ -26,6 +26,10 @@ He only ever talks in emoji, and now he's your bartender. Between levels the tru
 
 At the results screen, the heaviest tab gets the crown.
 
+## Drinks on names
+
+Every Semibot's floating nametag shows their running tally right in their name: **Bilbo (12 sips)**. The whole lobby sees the same numbers (the tab is host-authoritative and synced), so you always know who's deepest in it without opening a menu. The word matches your "unit word" setting, and it's one toggle to turn off.
+
 ## Settings
 
 All of it lives in the in-game mod menu (REPOConfig). The host's settings are the ones that count; clients automatically play by the host's rules in their room. Pick a preset, retune any single rule, swap the drink word, move the HUD, or quiet the terminal.
