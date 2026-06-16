@@ -32,6 +32,7 @@ namespace PourDecisions.Services
             CrownWin,     // you grabbed the crown - king of the losers
             RaceWin,      // won the king-of-the-losers RACE (ArenaRace vehicle dash)
             RaceOut,      // knocked out of the race
+            Betrayal,     // a crewmate smacked or killed one of their own - "{0}" = the traitor's name
         }
 
         // tab (drinks owed over the run) -> drunkenness stage 0..4
@@ -85,8 +86,13 @@ namespace PourDecisions.Services
             ReactKind.CrownWin => wild ? CrownWinReactWild : CrownWinReact,
             ReactKind.RaceWin => wild ? RaceWinReactWild : RaceWinReact,
             ReactKind.RaceOut => wild ? RaceOutReactWild : RaceOutReact,
+            ReactKind.Betrayal => wild ? BetrayalReactWild : BetrayalReact,
             _ => wild ? CheerReactWild : CheerReact,
         };
+
+        // Run nemesis: the enemy that's killed you the most THIS run. "{0}" = enemy display name, "{1}" =
+        // the kill count. Offered by the engine only when you actually have a nemesis (killed you 2+ times).
+        internal static string[] NemesisPool(bool wild) => wild ? NemesisLinesWild : NemesisLines;
 
         // King-of-the-losers winner, name-dropped in regular runs while they wear the crown. "{0}" = the
         // crowned Semibot's display name. Offered by the engine only while SessionManager has a crowned player.
@@ -701,6 +707,48 @@ namespace PourDecisions.Services
             "WE DID IT we're slightly less BROKE", "haul secured KISS the cart", "SURPLUS baby drinks are on the COMPANY",
             "we EXTRACTED i could KISS all of you (i won't)", "money money MONEY ok i'm crying", "take THAT taxman we LIVE another quota",
             "we made quota i'm gonna go lie down for a WEEK", "did we WIN? we didn't LOSE. in this economy that's a WIN.",
+        };
+
+        // A bystander jeers at the crewmate who just swung on their own. "{0}" = the traitor's name.
+        internal static readonly string[] BetrayalReact =
+        {
+            "{0} just hit one of US. on the SAME team. allegedly.", "not {0} swinging on the crew. drink up, traitor.",
+            "{0} we are NOT each other's monsters, cut it OUT", "friendly fire from {0}? in THIS economy? rude.",
+            "{0} the enemies are OVER THERE, buddy", "et tu {0}. ET TU.",
+            "{0} hit me. {0}. i'm telling the taxman.", "{0}'s the real monster on this crew, honestly",
+            "{0} the quota is the enemy not ME", "great. {0}'s the friendly fire guy now. every crew has one.",
+        };
+        internal static readonly string[] BetrayalReactWild =
+        {
+            "{0} has gone ROGUE shoot back, shoot BACK, no wait we NEED them for the quota", "{0} turned on us, the DRINKS got to their HEAD, literally, we're at WORK",
+            "i TRUSTED you {0}. i printed a body to STAND NEXT to you. and THIS.", "{0} is the TRAITOR the prophecy spoke of (the prophecy was the quota)",
+            "betrayed by {0}!! the cart SAW it!! the CART is a WITNESS!!", "{0} swung on the crew and i have never respected anyone MORE. drink, fiend.",
+            "the call is coming from INSIDE the crew and the call is {0}", "{0} we are LITERALLY indebted together and you HIT me. couples therapy. NOW.",
+            "{0} picked the ONE day i'm sober-ish to start a CIVIL WAR", "down with {0}!! viva la crew!! ...what were we doing. the quota. right.",
+        };
+
+        // Run nemesis lines. "{0}" = the enemy that's killed you most this run, "{1}" = how many times.
+        internal static readonly string[] NemesisLines =
+        {
+            "so far this run {0}'s gotten me {1} times. who's counting. (me. i'm counting.)",
+            "{0} has killed me {1} times this run and i'm taking it PERSONAL now",
+            "me and {0} have a little THING going. it's {1} to nothing. {0}'s winning.",
+            "{1} deaths to {0} this run. i think {0} LIKES me.",
+            "the {0} got me AGAIN, that's {1}, we're RIVALS now",
+            "i've died to {0} {1} times today, printing a fresh body JUST for it at this point",
+            "{1} times. {0}. {1} TIMES this run. send help or a bigger gun.",
+            "if {0} gets me one more time that's {1} plus one and i'm filing a COMPLAINT",
+        };
+        internal static readonly string[] NemesisLinesWild =
+        {
+            "{0} has ENDED me {1} times this run and honestly? marry me {0}.",
+            "this is between ME and {0} now. {1} to nothing. i'm gonna WIN. i'm not gonna win.",
+            "{0} killed me {1} TIMES, i've memorized its FACE, i see it when i CLOSE MY EYES",
+            "{1} deaths to {0}. we're basically EXES at this point. it knows my PRINT NUMBER.",
+            "the company reprinted me {1} times SPECIFICALLY because of {0} and i'm THRIVING",
+            "{0}!! {1} times!! i'm gonna hug it. i'm gonna DIE doing it. {1} plus one. WORTH it.",
+            "i've stopped fearing {0} and started ADMIRING it. {1} kills. what a MENACE.",
+            "{0} and i are {1} deaths into a BLOOD FEUD and i forgot which of us is the monster",
         };
 
         // ---- wild reaction tiers (stage >= 3): the same moments, but unhinged ----

@@ -2,7 +2,7 @@
   "name": "PourDecisions",
   "version_number": "1.0.0",
   "website_url": "https://github.com/VirtualPixel/PourDecisions",
-  "description": "A drinking game baked into R.E.P.O. Deaths, smashes and extractions call drinks; the Taxman runs your tab on the truck terminal and slurs it as you go. Everyone needs it; the host sets the rules.",
+  "description": "A drinking game built into R.E.P.O. Die, get grabbed, smash a valuable, shoot a teammate, and someone owes a drink. Everyone's name shows their tally and the Taxman keeps the tab. Everyone installs it; the host sets the rules.",
   "dependencies": [
     "BepInEx-BepInExPack-5.4.2305",
     "nickklmao-REPOConfig-1.2.6",

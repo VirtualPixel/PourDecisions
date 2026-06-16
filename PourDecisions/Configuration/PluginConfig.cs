@@ -44,6 +44,7 @@ namespace PourDecisions.Configuration
         private static readonly Dictionary<DrinkEvent, ConfigEntry<int>> _amount = new();
         private static readonly HashSet<ConfigEntryBase> _ruleEntries = new();
         public static ConfigEntry<bool> FinishOnWipe = null!;       // QuotaMissed
+        public static ConfigEntry<bool> FinishOnBackstab = null!;   // Backstabber (teammate kill)
         public static ConfigEntry<bool> EnemyEveryTime = null!;     // TaxmanCometh cadence
 
         // --- Display ---
@@ -104,8 +105,10 @@ namespace PourDecisions.Configuration
             BindAmount(config, DrinkEvent.Surplus, "Surplus extraction", 2, "Everyone drinks when you beat the quota.");
             BindAmount(config, DrinkEvent.WelcomeBack, "Revived", 0, "Drinks when you're brought back. Off by default.");
             BindAmount(config, DrinkEvent.Waterfall, "Waterfall at level start", 0, "A waterfall when a new level begins. Off by default.");
+            BindAmount(config, DrinkEvent.FriendlyFire, "Hit a crewmate", 1, "Drinks when you smack or knock over one of your own.");
 
             FinishOnWipe = config.Bind(SExtras, "Finish your drink on a wipe", true, "When the whole crew goes down, everyone finishes their drink.");
+            FinishOnBackstab = config.Bind(SExtras, "Finish your drink on a teammate kill", true, "Actually kill one of your own and you finish your drink.");
             EnemyEveryTime = config.Bind(SExtras, "Enemy drink every time", false, "On: every enemy spawn. Off: just the first one each level.");
 
             DrunkTerminal = config.Bind(SDisplay, "Drunk truck terminal", true, "The terminal slurs as the team drinks. Never touches haul or quota numbers.");
@@ -155,10 +158,12 @@ namespace PourDecisions.Configuration
         {
             if (!Enabled.Value) return false;
             if (ev == DrinkEvent.QuotaMissed) return FinishOnWipe.Value;
+            if (ev == DrinkEvent.Backstabber) return FinishOnBackstab.Value;
             return RuleAmount(ev) > 0;
         }
 
-        public static int RuleAmount(DrinkEvent ev) => ev == DrinkEvent.QuotaMissed ? 0 : RuleAmountLocal(ev);
+        public static int RuleAmount(DrinkEvent ev) =>
+            ev == DrinkEvent.QuotaMissed || ev == DrinkEvent.Backstabber ? 0 : RuleAmountLocal(ev);
         public static int RuleAmountLocal(DrinkEvent ev) => _amount.TryGetValue(ev, out var c) ? c.Value : 0;
 
         public static bool EffectiveEnemyEveryTime => EnemyEveryTime.Value;
@@ -184,6 +189,7 @@ namespace PourDecisions.Configuration
             if (ReferenceEquals(e.ChangedSetting, Ruleset)) { ApplyPreset(Ruleset.Value); return; }
             if (_ruleEntries.Contains(e.ChangedSetting) ||
                 ReferenceEquals(e.ChangedSetting, FinishOnWipe) ||
+                ReferenceEquals(e.ChangedSetting, FinishOnBackstab) ||
                 ReferenceEquals(e.ChangedSetting, EnemyEveryTime))
                 MarkCustom();
         }
@@ -207,6 +213,7 @@ namespace PourDecisions.Configuration
                         Set(DrinkEvent.Flatlined, 3);
                         Set(DrinkEvent.CashOut, 1);
                         FinishOnWipe.Value = true;
+                        FinishOnBackstab.Value = true;
                         EnemyEveryTime.Value = false;
                         break;
 
@@ -221,7 +228,9 @@ namespace PourDecisions.Configuration
                         Set(DrinkEvent.Surplus, 4);
                         Set(DrinkEvent.WelcomeBack, 1);
                         Set(DrinkEvent.Waterfall, 1);
+                        Set(DrinkEvent.FriendlyFire, 2);
                         FinishOnWipe.Value = true;
+                        FinishOnBackstab.Value = true;
                         EnemyEveryTime.Value = true;
                         break;
 
@@ -236,7 +245,9 @@ namespace PourDecisions.Configuration
                         Set(DrinkEvent.Surplus, 2);
                         Set(DrinkEvent.WelcomeBack, 0);
                         Set(DrinkEvent.Waterfall, 0);
+                        Set(DrinkEvent.FriendlyFire, 1);
                         FinishOnWipe.Value = true;
+                        FinishOnBackstab.Value = true;
                         EnemyEveryTime.Value = false;
                         break;
                 }

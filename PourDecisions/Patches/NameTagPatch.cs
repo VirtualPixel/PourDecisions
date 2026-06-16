@@ -35,10 +35,22 @@ namespace PourDecisions.Patches
                 return;
             }
 
-            int drinks = BarTabStats.TabFor(SemiFunc.PlayerGetSteamID(pa));
-            string desired = drinks > 0
-                ? $"{name} <color=#e0a040>({drinks} {Unit(drinks)})</color>"
-                : name;
+            string id = SemiFunc.PlayerGetSteamID(pa);
+            int total = BarTabStats.TabFor(id);
+            string desired;
+            if (total <= 0)
+            {
+                desired = name;
+            }
+            else
+            {
+                int owed = total - PourStats.Downed(id);
+                if (owed < 0) owed = 0;
+                // "(12 sips)" when caught up; "(12 sips, 4 owed)" with the debt in red when they're behind.
+                desired = owed > 0
+                    ? $"{name} <color=#e0a040>({total} {Unit(total)}</color><color=#d05050>, {owed} owed</color><color=#e0a040>)</color>"
+                    : $"{name} <color=#e0a040>({total} {Unit(total)})</color>";
+            }
 
             if (text.text == desired) return;
             text.richText = true;   // the suffix carries a colour tag; the vanilla name is plain, so this is safe

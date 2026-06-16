@@ -14,7 +14,17 @@ namespace PourDecisions.Patches
     internal static class PlayerDeathPatch
     {
         [HarmonyPostfix]
-        public static void Postfix(PlayerAvatar __instance) => RuleEngine.OnEvent(DrinkEvent.Flatlined, __instance);
+        public static void Postfix(PlayerAvatar __instance, int enemyIndex)
+        {
+            RuleEngine.OnEvent(DrinkEvent.Flatlined, __instance);
+
+            // Host tracks who killed whom this run, so drunk Semibots can gripe about their nemesis.
+            if (!SemiFunc.IsMasterClientOrSingleplayer() || enemyIndex < 0) return;
+            var enemy = SemiFunc.EnemyGetFromIndex(enemyIndex);
+            string? name = enemy != null && enemy.EnemyParent != null ? enemy.EnemyParent.enemyName : null;
+            if (!string.IsNullOrEmpty(name))
+                BarTabStats.RecordDeathByEnemy(SemiFunc.PlayerGetSteamID(__instance), name!);
+        }
     }
 
     [HarmonyPatch(typeof(PlayerAvatar), nameof(PlayerAvatar.ReviveRPC))]

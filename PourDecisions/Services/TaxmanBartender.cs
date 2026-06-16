@@ -1,5 +1,8 @@
+using Photon.Pun;
 using PourDecisions.Configuration;
 using PourDecisions.Models;
+using StatsCore;
+using System.Collections.Generic;
 using System.Text;
 
 namespace PourDecisions.Services
@@ -24,6 +27,8 @@ namespace PourDecisions.Services
             DrinkEvent.Surplus      => "{$$}{sparkle}{heart}",
             DrinkEvent.WelcomeBack  => "{heart}{:)}",
             DrinkEvent.Waterfall    => "{:P}{:D}{eyes}",
+            DrinkEvent.FriendlyFire => "{fedup}{thumbsdown}",
+            DrinkEvent.Backstabber  => "{skull}{weird_eye}",
             _ => "{eyes}",
         };
 
@@ -58,13 +63,58 @@ namespace PourDecisions.Services
             sb.Append("{register} ").Append(Drunkify.Apply("the tab", proof, seed)).Append(' ').Append("{register}");
             Post(sb.ToString());
 
+            string? slacker = null; int worstOwed = 0;
             for (int i = 0; i < board.Count; i++)
             {
                 var tab = board[i].Value;
                 string crown = i == 0 && board.Count > 1 ? " {fire}" : "";
                 string name = Drunkify.Apply(tab.Name, proof, seed + i);
                 Post($"{name} {Mood(tab.Total)} x{tab.Total}{crown}");
+
+                int owed = tab.Total - PourStats.Downed(board[i].Key);
+                if (owed > worstOwed) { worstOwed = owed; slacker = tab.Name; }
             }
+
+            // Name and shame whoever's furthest behind on actually drinking what they owe.
+            if (slacker != null && worstOwed >= 3)
+                Post($"{Drunkify.Apply(slacker, proof, seed + 91)} {{fedup}}{{!}} owes {worstOwed}");
+
+            HallOfShame(proof, seed);   // once per run: career body count pulled from the whole crew
+        }
+
+        // Career standings across the actual crew, pulled live from every client via StatsCore's host-pull.
+        // Career stats live only on each player's own machine, so this is the only way to read the room's
+        // totals at once. Once per run, multiplayer only, host only. The callback posts when everyone replies.
+        private static bool _hallShown;
+        public static void ResetRun() => _hallShown = false;
+
+        private static void HallOfShame(float proof, int seed)
+        {
+            if (_hallShown || !PhotonNetwork.InRoom || PhotonNetwork.CurrentRoom.PlayerCount < 2) return;
+            _hallShown = true;
+
+            Stats.RequestFromClients(GameStats.K_Deaths, byPlayer =>
+            {
+                var ranked = new List<KeyValuePair<string, int>>(byPlayer);
+                ranked.Sort((a, b) => b.Value.CompareTo(a.Value));
+                if (ranked.Count == 0 || ranked[0].Value <= 0) return;
+
+                Post("{register} " + Drunkify.Apply("career body count", proof, seed + 200) + " {register}");
+                int shown = 0;
+                foreach (var entry in ranked)
+                {
+                    if (entry.Value <= 0 || shown >= 4) break;
+                    Post($"{Drunkify.Apply(NameForSteamID(entry.Key), proof, seed + 201 + shown)} {{skull}} x{entry.Value}");
+                    shown++;
+                }
+            });
+        }
+
+        private static string NameForSteamID(string steamID)
+        {
+            var avatar = SemiFunc.PlayerAvatarGetFromSteamID(steamID);
+            string name = avatar != null ? avatar.playerName : "";
+            return string.IsNullOrEmpty(name) ? "Semibot" : name;
         }
 
         private static string Mood(int total) => total >= 12 ? "{skull}" : total >= 6 ? "{fedup}" : total >= 1 ? "{mellow}" : "{:)}";

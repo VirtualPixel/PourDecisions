@@ -79,7 +79,11 @@ namespace PourDecisions.UI
             // gameplay - the shop/truck are downtime (you can still see your DOWNED total there).
             if (CanSettle() && Input.GetKeyDown(PluginConfig.ConfirmKey.Value))
             {
-                if (BarTabStats.ConfirmOne()) { Sfx.Drink(); CamFx.Confirm(); _downed.Bump(); }  // glitch + chime = you drank it
+                if (BarTabStats.ConfirmOne())
+                {
+                    Sfx.Drink(); CamFx.Confirm(); _downed.Bump();   // glitch + chime = you drank it
+                    PourStats.PublishLocalDowned(BarTabStats.LocalDrunk());   // tell the lobby you kept up
+                }
                 else { Sfx.Dud(); _dudFlash = 1f; }
             }
 
@@ -239,7 +243,7 @@ namespace PourDecisions.UI
             {
                 DrinkEvent.CashOut or DrinkEvent.Surplus or DrinkEvent.WelcomeBack => Green,
                 DrinkEvent.Flatlined or DrinkEvent.QuotaMissed => Red,
-                DrinkEvent.Butterfingers => Amber,
+                DrinkEvent.Butterfingers or DrinkEvent.FriendlyFire or DrinkEvent.Backstabber => Amber,
                 _ => White,
             };
             return ($"{reason}\n{line2}", main, White);

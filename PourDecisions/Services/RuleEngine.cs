@@ -31,6 +31,7 @@ namespace PourDecisions.Services
             DrinkEvent.DownBad => 5f,         // repeated tumbles
             DrinkEvent.InTheBag => 6f,        // headman re-grabbing
             DrinkEvent.Butterfingers => 4f,   // a valuable getting wailed on
+            DrinkEvent.FriendlyFire => 5f,    // one scuffle isn't a drink per hit
             _ => 0f,
         };
 
@@ -54,6 +55,7 @@ namespace PourDecisions.Services
             _enemySpawnedThisLevel = false;
             BarTabStats.ResetRun();
             ProofService.Reset();
+            TaxmanBartender.ResetRun();
             Patches.GameDirectorResultPatch.Shown = false;
         }
 
@@ -147,6 +149,36 @@ namespace PourDecisions.Services
                         Team(kind, PluginConfig.RuleAmount(kind), false, "Waterfall!");
                     return;
             }
+        }
+
+        // Player-on-player. Host-only, like OnEvent. The attacker is the one who drinks: a real hit on a
+        // crewmate is a FriendlyFire drink, actually killing one is a Backstabber finish-your-drink.
+        public static void OnBetrayal(PlayerAvatar attacker, PlayerAvatar victim, int damage, bool tumbled, bool killed)
+        {
+            if (!PluginConfig.Enabled.Value || !InRun()) return;
+            if (SemiFunc.RunIsShop() || SemiFunc.RunIsLobby()) return;   // downtime jostling doesn't count
+            if (!SemiFunc.IsMasterClientOrSingleplayer()) return;
+
+            if (killed)
+            {
+                if (!PluginConfig.RuleEnabled(DrinkEvent.Backstabber)) return;
+                var kill = new DrinkOrder { Kind = DrinkEvent.Backstabber, FinishDrink = true, Reason = $"{Name(attacker)} put down {Name(victim)}." };
+                kill.Add(SteamID(attacker), Name(attacker));
+                Dispatch(kill);
+                DrunkTexts.ReactBetrayal(attacker);
+                return;
+            }
+
+            if (!PluginConfig.RuleEnabled(DrinkEvent.FriendlyFire)) return;
+            if (!tumbled && damage < 10) return;                 // a shove or chip damage isn't a drink
+            if (OnCooldown(DrinkEvent.FriendlyFire, attacker)) return;
+            int amount = PluginConfig.RuleAmount(DrinkEvent.FriendlyFire);
+            if (amount <= 0) return;
+
+            var order = new DrinkOrder { Kind = DrinkEvent.FriendlyFire, Amount = amount, Reason = $"{Name(attacker)} smacked {Name(victim)}." };
+            order.Add(SteamID(attacker), Name(attacker));
+            Dispatch(order);
+            DrunkTexts.ReactBetrayal(attacker);
         }
 
         private static void Personal(DrinkEvent kind, PlayerAvatar subject, int amount, string reason)

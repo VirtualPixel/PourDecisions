@@ -2,45 +2,47 @@
 
 Bad calls, worse hangovers.
 
-A drinking game stitched straight into R.E.P.O. The job runs like normal, but now the bad luck has a price. Die, get grabbed, smash a fat valuable, fumble the quota, and someone owes a drink. The Taxman keeps the tab on the truck terminal, and the drunker the crew gets, the worse his handwriting.
+A drinking game built into R.E.P.O. You still run the job, but now every bit of bad luck costs you. Die, get grabbed, smash a fat valuable, blow the quota, shoot a teammate, and somebody owes a drink. The Taxman keeps the tab and the whole crew can see who's falling behind.
 
-**Everyone in the lobby needs this installed. The host sets the rules.**
+**Everyone in the lobby needs it installed. The host sets the rules.**
 
-> Please drink responsibly. Set the unit word to "dare" or "push-up" in the config if you want to play dry; the whole thing works the same.
+> Drink responsibly. If you'd rather play dry, set the unit word to "dare" or "push-up" in the config and it all works the same.
 
-## What calls a drink
+## What costs you a drink
 
-- **Flatlined**: you died. Take a shot. (First death of the run stings extra.)
-- **Butterfingers**: you smashed a valuable. Drink scales with the money you wasted.
-- **Down Bad**: something knocked you on your back.
-- **In The Bag**: the head-grabber got you.
-- **Taxman Cometh**: something woke up. Everyone sips.
-- **Cash Out / Surplus**: extraction hit the goal. Cheers, and a bigger round if you went over.
-- **Quota Missed**: the whole crew went down. Finish your drinks.
+- **You die.** Take your hit. First death of the run stings a little extra.
+- **You smash a valuable.** The bigger the money you just lost, the more you drink.
+- **Something knocks you over.** Down you go, down it goes.
+- **The head-grabber gets you.** Bagged.
+- **An enemy wakes up.** Whole crew sips.
+- **You shoot or kill a teammate.** Hit one of your own and you drink. Actually kill one and you finish your drink.
+- **You cash out.** Everyone toasts the haul, bigger round if you beat the quota.
+- **The crew wipes.** Everybody finishes.
 
-Every rule is a toggle with its own amount. Four presets ship in the config: **Casual**, **Standard**, **Last Resort**, and **Custom**.
+Every one of these is a toggle with its own number. Four presets to pick from: **Casual**, **Standard**, **Last Resort**, and **Custom**.
 
-## The Taxman runs your tab
+## Drink counts on names
 
-He only ever talks in emoji, and now he's your bartender. Between levels the truck terminal reads out everyone's tab and reacts to the run. As the team's count climbs, the whole terminal (his lines and the game's both) starts to slur, hiccup and trail off. It never touches the haul or quota numbers, so you can always read what matters. Turn it off in the config if you want a sober screen.
+Everyone's floating name shows their running tally: **Bilbo (12 sips)**. If someone's not keeping up, you'll see what they still owe in red next to it, so the slow drinkers have nowhere to hide. The whole lobby sees the same numbers. It uses your unit word, and there's one toggle to switch it off.
 
-At the results screen, the heaviest tab gets the crown.
+## The Taxman
 
-## Drinks on names
+He only talks in emoji, and he's your bartender now. Back at the truck he reads out everyone's tab, calls out whoever owes the most, and once a run he pulls up the crew's all-time death count so you can see who keeps dying the hardest. The more the crew drinks, the messier his messages get, slurring and trailing off. He never touches the haul or quota numbers, so you can always read what matters. Turn it off if you want a clean screen.
 
-Every Semibot's floating nametag shows their running tally right in their name: **Bilbo (12 sips)**. The whole lobby sees the same numbers (the tab is host-authoritative and synced), so you always know who's deepest in it without opening a menu. The word matches your "unit word" setting, and it's one toggle to turn off.
+Drunk Semibots also start running their mouths on screen, and the drunker they get the worse it is, right down to ranting about whatever monster keeps killing them this run ("that thing's gotten me four times, we're rivals now"). Heaviest tab takes the crown on the results screen.
 
 ## Settings
 
-All of it lives in the in-game mod menu (REPOConfig). The host's settings are the ones that count; clients automatically play by the host's rules in their room. Pick a preset, retune any single rule, swap the drink word, move the HUD, or quiet the terminal.
+All of it lives in the in-game mod menu (REPOConfig). The host's settings are the ones that matter; everyone else just plays by the host's rules. Pick a preset, tweak any single rule, swap the drink word, move the overlay, or quiet the Taxman down.
 
-There's also a gentle nudge: if the mod runs several days in a row, a small warning shows on startup, in the game's own splash style. On by default, one toggle to turn it off.
+There's also a small drink-responsibly notice on startup. It nudges a little harder if you've been at it a few days in a row. On by default, one toggle to turn off.
 
 ## Compatibility
 
-- R.E.P.O., host-and-clients (everyone installs).
-- Assumes one consistent host per run. If the host leaves mid-run the room dissolves anyway; orders don't survive a master-client switch.
-- Requires REPOConfig for the in-game settings.
-- No conflicts with REPOLib mods; Pour Decisions registers nothing of its own.
+- R.E.P.O., host and clients (everyone installs it).
+- Built on StatsCore, which it needs to run.
+- Assumes one host for the run. If the host leaves mid-run the room falls apart anyway, and drinks don't carry across a host swap.
+- Needs REPOConfig for the in-game settings.
+- Plays fine with REPOLib mods; it registers nothing of its own.
 
 Found a bug or want a new rule? Open an issue.

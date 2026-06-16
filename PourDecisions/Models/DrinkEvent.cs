@@ -13,6 +13,8 @@ namespace PourDecisions.Models
         Surplus,        // extraction went over the goal (bigger toast)
         QuotaMissed,    // whole team wiped (finish your drink)
         WelcomeBack,    // revived
-        Waterfall       // level-start ceremony
+        Waterfall,      // level-start ceremony
+        FriendlyFire,   // you hit a crewmate (or knocked them over)
+        Backstabber     // you KILLED a crewmate (finish your drink)
     }
 }

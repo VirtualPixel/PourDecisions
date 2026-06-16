@@ -134,6 +134,11 @@ namespace PourDecisions.Services
 
             if (!dead && where == Where.Level)
             {
+                // Your run nemesis: occasionally gripe about whatever's killed you the most this run.
+                var nem = BarTabStats.TopNemesis(SemiFunc.PlayerGetSteamID(p));
+                if (nem != null && Random.value < 0.12f)
+                    return string.Format(PickUnused(DrunkLines.NemesisPool(stage >= 3)), nem.Value.Name, nem.Value.Count);
+
                 var enemies = PresentEnemies();
                 var valuables = PresentValuables();
                 bool wild = stage >= 3;
@@ -182,6 +187,9 @@ namespace PourDecisions.Services
         // First-person reactions (the subject voices their own misfortune).
         internal static void ReactSpewerFace(PlayerAvatar subject) => ReactInternal(subject, ReactKind.SpewerFace);
         internal static void ReactShadow(PlayerAvatar subject) => ReactInternal(subject, ReactKind.Shadow);
+
+        // A crewmate just hit or killed one of their own - someone else calls out the traitor by name.
+        internal static void ReactBetrayal(PlayerAvatar traitor) => ReactAbout(traitor, ReactKind.Betrayal, includeDead: true, chance: 0.7f);
 
         // Reactions ABOUT a player, voiced by someone else (the lines are "{0}"-templated with the subject's
         // name). The spewer hosing the crew, and the whole king-of-the-losers arena layer.

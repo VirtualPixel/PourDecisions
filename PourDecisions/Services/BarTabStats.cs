@@ -24,6 +24,9 @@ namespace PourDecisions.Services
         // steamID -> tab for this run.
         private static readonly Dictionary<string, Tab> _run = new();
 
+        // steamID -> (enemy name -> times it killed you THIS run). Host-side flavor for nemesis drunk-texts.
+        private static readonly Dictionary<string, Dictionary<string, int>> _runDeathsByEnemy = new();
+
         // Career (this machine, the local player).
         private static int _careerUnits;
         private static int _careerRuns;
@@ -79,6 +82,25 @@ namespace PourDecisions.Services
         }
 
         public static int TabFor(string steamID) => _run.TryGetValue(steamID, out var t) ? t.Total : 0;
+
+        // ---- run nemesis (who's killed you most this run) ----
+
+        public static void RecordDeathByEnemy(string steamID, string enemyName)
+        {
+            if (string.IsNullOrEmpty(steamID) || string.IsNullOrEmpty(enemyName)) return;
+            if (!_runDeathsByEnemy.TryGetValue(steamID, out var byEnemy)) { byEnemy = new Dictionary<string, int>(); _runDeathsByEnemy[steamID] = byEnemy; }
+            byEnemy[enemyName] = (byEnemy.TryGetValue(enemyName, out var n) ? n : 0) + 1;
+        }
+
+        // The enemy that's killed this player most this run, but only once it's gotten them at least twice
+        // (one death isn't a nemesis). Null otherwise.
+        public static (string Name, int Count)? TopNemesis(string steamID)
+        {
+            if (!_runDeathsByEnemy.TryGetValue(steamID, out var byEnemy)) return null;
+            string best = ""; int bestN = 0;
+            foreach (var kv in byEnemy) if (kv.Value > bestN) { best = kv.Key; bestN = kv.Value; }
+            return bestN >= 2 ? (best, bestN) : null;
+        }
 
         // ---- confirm-a-drink (local player) ----
 
@@ -139,6 +161,7 @@ namespace PourDecisions.Services
             if (_run.Count > 0) { _careerRuns++; Save(); }
             FoldRunIntoSave();   // bank this run's drinks into the current save file (host only)
             _run.Clear();
+            _runDeathsByEnemy.Clear();
         }
 
         // ---- per-save, per-person ledger ----

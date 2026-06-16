@@ -17,6 +17,7 @@ namespace PourDecisions.Patches
         {
             BarTabStats.EnsureLoaded();
             StatMilestones.Wire();   // subscribe to StatsCore's lifetime stats (push, no polling)
+            PourStats.Init();        // define the networked confirmed-drinks stat
             if (_services != null) return;
 
             _services = new GameObject("PourDecisions_Services");
