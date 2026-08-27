@@ -37,7 +37,7 @@ namespace PourDecisions.Services
                 () => PluginConfig.EnableTestCommands.Value,
                 debugOnly: false));
 
-            PourDecisions.LogAlways("[Test] registered 'pd' dev-console command.");
+            PourDecisions.LogInfo("[Test] registered 'pd' dev-console command.");
         }
 
         private static void Execute(bool _, string[] args)

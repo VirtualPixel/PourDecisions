@@ -92,7 +92,7 @@ namespace PourDecisions.Configuration
                 new ConfigDescription("Press once per drink to clear what you owe.", null, "HideFromREPOConfig"));
             RebindConfirmKey = config.Bind(SGeneral, "Rebind confirm key", false,
                 "Turn on, then press any key in-game to set it as your confirm-a-drink key.");
-            LogLevel = config.Bind(SGeneral, "Log level", VerbosityLevel.Off, "Logging detail. Off is fine for normal play.");
+            LogLevel = config.Bind(SDebug, "Log level", VerbosityLevel.Off, "Logging detail. Off is fine for normal play.");
 
             // One number per event. Defaults are the Standard preset.
             BindAmount(config, DrinkEvent.Flatlined, "Death", 3, "Drinks when you die.");
