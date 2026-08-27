@@ -58,6 +58,9 @@ namespace PourDecisions.Patches
     {
         private static string _lastCrowned = "";
 
+        // A new arena is a new coronation, even for the same king. Cleared on every level change.
+        internal static void ResetLevel() => _lastCrowned = "";
+
         [HarmonyPostfix]
         public static void Postfix(Arena __instance)
         {

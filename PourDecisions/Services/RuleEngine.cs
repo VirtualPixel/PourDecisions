@@ -24,6 +24,8 @@ namespace PourDecisions.Services
             _enemySpawnedThisLevel = false;
             _cooldown.Clear();
             Patches.ExtractionPointPatch.ClearLevel();
+            Patches.ArenaCrownGrabPatch.ResetLevel();
+            Patches.ArenaRaceWinnerPatch.ResetLevel();
         }
 
         private static float CooldownFor(DrinkEvent kind) => kind switch

@@ -25,6 +25,8 @@ namespace PourDecisions.Patches
     {
         private static string _lastCrowned = "";
 
+        internal static void ResetLevel() => _lastCrowned = "";
+
         [HarmonyPostfix]
         public static void Postfix(ArenaRace __instance)
         {
