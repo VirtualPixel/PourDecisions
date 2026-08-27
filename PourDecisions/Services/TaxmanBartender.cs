@@ -41,13 +41,10 @@ namespace PourDecisions.Services
             return "";
         }
 
-        // A live reaction for an event that happens in the truck. In-level events are handled by
-        // the HUD; the terminal stays for bookkeeping.
-        public static void React(DrinkOrder order)
-        {
-            if (!SemiFunc.RunIsLobby()) return;
-            Post(Emoji(order.Kind) + ChaosTail());
-        }
+        // A live reaction on whatever truck screen is around. Orders are only ever made in a level or
+        // the arena (RuleEngine bails in the shop and the truck), so gating this on the truck meant it
+        // never ran. The screen drops posts while it is typing, which is fine for a reaction.
+        public static void React(DrinkOrder order) => Post(Emoji(order.Kind) + ChaosTail());
 
         // The per-Semibot tab, read out on the terminal. Host-only; call when arriving at the truck.
         public static void Recap()
