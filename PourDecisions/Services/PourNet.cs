@@ -8,7 +8,9 @@ namespace PourDecisions.Services
     // Proper Photon RPCs - no RaiseEvent byte codes. We attach this component to PunManager's
     // GameObject (a persistent singleton whose PhotonView has a stable, shared ViewID that vanilla
     // code already RPCs through), so PUN dispatches our [PunRPC] methods by name with typed args.
-    // Every RPC is host-sent and master-gated on receipt, so a client can't spoof drinks.
+    // Every RPC is host-sent and master-gated on receipt, so a client can't spoof drinks. Names carry a
+    // Pour prefix: PUN dispatches by name across every component on that GameObject, and StatsCore
+    // and friends live there too.
     public class PourNet : MonoBehaviourPunCallbacks
     {
         public static PourNet? Instance { get; private set; }
@@ -28,25 +30,25 @@ namespace PourDecisions.Services
             int i = 0;
             foreach (var kv in order.Targets) { ids[i] = kv.Key; names[i] = kv.Value; i++; }
             byte flags = (byte)((order.FinishDrink ? 1 : 0) | (order.IsTeam ? 2 : 0));
-            View!.RPC(nameof(OrderRPC), RpcTarget.Others, (byte)order.Kind, order.Amount, flags, order.Reason ?? "", ids, names);
+            View!.RPC(nameof(PourOrderRPC), RpcTarget.Others, (byte)order.Kind, order.Amount, flags, order.Reason ?? "", ids, names);
         }
 
         public static void SendDrunkText(string name, string line)
         {
             if (!CanSend) return;
-            View!.RPC(nameof(DrunkTextRPC), RpcTarget.Others, name, line);
+            View!.RPC(nameof(PourDrunkTextRPC), RpcTarget.Others, name, line);
         }
 
         public static void SendSnapshot(Player target, string data)
         {
             if (View == null || !PhotonNetwork.InRoom) return;
-            View.RPC(nameof(TabSnapshotRPC), target, data);
+            View.RPC(nameof(PourTabSnapshotRPC), target, data);
         }
 
         // ---- receive (clients) ----
 
         [PunRPC]
-        public void OrderRPC(byte kind, int amount, byte flags, string reason, string[] ids, string[] names, PhotonMessageInfo info = default)
+        public void PourOrderRPC(byte kind, int amount, byte flags, string reason, string[] ids, string[] names, PhotonMessageInfo info = default)
         {
             if (!SemiFunc.MasterOnlyRPC(info)) return;   // only the host hands out drinks
             var order = new DrinkOrder
@@ -67,14 +69,14 @@ namespace PourDecisions.Services
         }
 
         [PunRPC]
-        public void DrunkTextRPC(string name, string line, PhotonMessageInfo info = default)
+        public void PourDrunkTextRPC(string name, string line, PhotonMessageInfo info = default)
         {
             if (!SemiFunc.MasterOnlyRPC(info)) return;
             DrinkHud.Instance?.AddDrunkFeed(name, line);
         }
 
         [PunRPC]
-        public void TabSnapshotRPC(string data, PhotonMessageInfo info = default)
+        public void PourTabSnapshotRPC(string data, PhotonMessageInfo info = default)
         {
             if (!SemiFunc.MasterOnlyRPC(info)) return;
             BarTabStats.ApplyRunSnapshot(data);
