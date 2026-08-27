@@ -143,7 +143,7 @@ PourDecisions/
 ### 6.3 Late join
 Ruleset *and* the running tab both ride room custom properties, so a joiner reads current state on `OnJoinedRoom` with no message to send - sticky props replay automatically. The joiner's `BarTabStats` seeds from that property; from then on its local tally tracks the same deterministic vanilla events everyone else sees. (If a per-avatar action is ever needed at join, the addressable signal is `PlayerTumble.SetupDone`, not `OnPlayerEnteredRoom`.)
 
-### 6.4 Scene gating (CLAUDE.md rule #10)
+### 6.4 Scene gating
 `NetworkCallbackService` and `DrinkHud` live on a `DontDestroyOnLoad` GO, so they exist in the menu too. Gate all prompt rendering and tally on `SemiFunc.RunIsLevel()` (plus `RunIsShop()`/`RunIsLobby()` where a rule should also fire in the truck/shop). On the level→menu edge, clear active toasts and hide the Tab widget. No drink prompts ever fire on the main menu.
 
 ---
@@ -188,7 +188,7 @@ No unified palette is exposed, so hardcode REPO's observed values as `static rea
 - `Enabled` (bool, master)
 - `Ruleset` (`string` + `AcceptableValueList`: `Casual / Standard / Last Resort / Custom`) - spaced human labels, not an enum, per the skill's REPOConfig note.
 - `UnitWord` (string, default `"drink"`) - also the soft-mode lever.
-- `ToggleHudKey` (`ConfigEntry<KeyCode>`, default `KeyCode.F7`) - show/hide overlay. **`KeyCode`, never the `Input.GetKeyDown(string)` trap** (CLAUDE.md rule #15).
+- `ToggleHudKey` (`ConfigEntry<KeyCode>`, default `KeyCode.F7`) - show/hide overlay. **`KeyCode`, never the `Input.GetKeyDown(string)` trap**.
 
 `[Rules]` (each pair shown only meaningfully in Custom; always bound so REPOConfig renders them)
 - per rule: `Rule_Flatlined` (bool) + `Amount_Flatlined` (int, `AcceptableValueRange 0..5`), same shape for Down Bad, In The Bag, Welcome Back, Cash Out, First Blood bonus.
@@ -200,7 +200,7 @@ No unified palette is exposed, so hardcode REPO's observed values as `static rea
 `[Display]`
 - `ShowTab` (bool), `UsePipEmoji` (bool), `PromptSeconds` (float), `TeamSplash` (bool), `Sound` (bool).
 
-All read into locals at the top of hot methods (CLAUDE.md rules #14/#17 - every `.Value` explicit; never per-frame `.Value` reads in render loops).
+All read into locals at the top of hot methods (every `.Value` explicit; never per-frame `.Value` reads in render loops).
 
 ---
 
@@ -223,7 +223,7 @@ All read into locals at the top of hot methods (CLAUDE.md rules #14/#17 - every 
 4. **Full rule catalog** - remaining patches, presets, value-scaled Butterfingers.
 5. **Networking** - `RulesetSync` room props + the "host's rules" note; two-client test.
 6. **Ceremonies + leaderboard** - `CeremonyService` RaiseEvent (waterfall/random), `BarTabScreen`, late-join snapshot.
-7. **Ship gate** - repo-compat-check + repo-ai-check + principal-review, README/CHANGELOG in a human voice, 256² icon, zip.
+7. **Ship gate** - compat check against the current game, README/CHANGELOG pass, 256² icon, zip.
 
 ---
 

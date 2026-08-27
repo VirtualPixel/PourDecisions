@@ -114,13 +114,17 @@ namespace PourDecisions.Patches
         }
     }
 
-    [HarmonyPatch(typeof(RunManagerPUN), "AllPlayersDeadRPC")]
+    // A wipe. RunManager tells OTHER clients with AllPlayersDeadRPC (sent OthersBuffered), so a
+    // postfix on that RPC never runs on the host, and the host is the only machine that hands out
+    // drinks. The host's own path is ChangeLevel(_levelFailed: true) from a real level. The arena
+    // ending also comes through with _levelFailed, and RunIsLevel keeps that out.
+    [HarmonyPatch(typeof(RunManager), nameof(RunManager.ChangeLevel))]
     internal static class RunManagerWipePatch
     {
-        [HarmonyPostfix]
-        public static void Postfix(bool _set)
+        [HarmonyPrefix]
+        public static void Prefix(bool _levelFailed)
         {
-            if (_set) RuleEngine.OnEvent(DrinkEvent.QuotaMissed, null);
+            if (_levelFailed && SemiFunc.RunIsLevel()) RuleEngine.OnEvent(DrinkEvent.QuotaMissed, null);
         }
     }
 
