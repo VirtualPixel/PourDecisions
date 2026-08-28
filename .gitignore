@@ -5,3 +5,5 @@ bin/
 # OS / editor cruft
 .DS_Store
 *.user
+
+graphify-out/

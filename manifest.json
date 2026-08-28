@@ -1,6 +1,6 @@
 {
   "name": "PourDecisions",
-  "version_number": "1.0.0",
+  "version_number": "1.0.1",
   "website_url": "https://github.com/VirtualPixel/PourDecisions",
   "description": "A drinking game built into R.E.P.O. Die, get grabbed, smash a valuable, shoot a teammate, and someone owes a drink. Everyone's name shows their tally and the Taxman keeps the tab. Everyone installs it; the host sets the rules.",
   "dependencies": [

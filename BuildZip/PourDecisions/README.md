@@ -19,6 +19,8 @@ A drinking game built into R.E.P.O. You still run the job, but now every bit of 
 - **You cash out.** Everyone toasts the haul, bigger round if you beat the quota.
 - **The crew wipes.** Everybody finishes.
 
+Two more ship switched off, for the crews that want them: a drink when you get revived, and a waterfall at the start of every level.
+
 Every one of these is a toggle with its own number. Four presets to pick from: **Casual**, **Standard**, **Last Resort**, and **Custom**.
 
 ## Drink counts on names
@@ -33,7 +35,7 @@ Drunk Semibots also start running their mouths on screen, and the drunker they g
 
 ## Settings
 
-All of it lives in the in-game mod menu (REPOConfig). The host's settings are the ones that matter; everyone else just plays by the host's rules. Pick a preset, tweak any single rule, swap the drink word, move the overlay, or quiet the Taxman down.
+All of it lives in the in-game mod menu (REPOConfig). The host's settings are the ones that matter; everyone else just plays by the host's rules. Pick a preset, tweak any single rule, swap the drink word, hide the overlay, or quiet the Taxman down.
 
 There's also a small drink-responsibly notice on startup. It nudges a little harder if you've been at it a few days in a row. On by default, one toggle to turn off.
 
@@ -44,5 +46,15 @@ There's also a small drink-responsibly notice on startup. It nudges a little har
 - Assumes one host for the run. If the host leaves mid-run the room falls apart anyway, and drinks don't carry across a host swap.
 - Needs REPOConfig for the in-game settings.
 - Plays fine with REPOLib mods; it registers nothing of its own.
+- Everyone in the lobby should be on the same version. 1.0.1 renamed the internal messages, so a 1.0.0 client in a 1.0.1 room won't get the drinks.
 
-Found a bug or want a new rule? Open an issue.
+## Contact
+
+| Purpose | Where |
+|---|---|
+| Bug reports and suggestions | [GitHub Issues](https://github.com/VirtualPixel/PourDecisions/issues) |
+| Questions, test builds, or just hanging out | [Vippy's Discord](https://discord.gg/kKqhck2NrP) |
+| R.E.P.O. modding in general | [R.E.P.O. Modding Server](https://discord.gg/9fDzZ9sk95) |
+
+Everything I make stays free. If one of these mods made your runs better and you feel like
+saying thanks, there is a [Ko-fi](https://ko-fi.com/vippydev).
