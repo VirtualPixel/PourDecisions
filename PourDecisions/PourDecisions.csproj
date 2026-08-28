@@ -52,6 +52,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <InternalsVisibleTo Include="PourDecisions.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="Assembly-CSharp">
       <HintPath>$(RepoManagedDir)/Assembly-CSharp.dll</HintPath>
       <Private>false</Private>

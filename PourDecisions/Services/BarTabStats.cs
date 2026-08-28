@@ -212,8 +212,16 @@ namespace PourDecisions.Services
             return sb.ToString();
         }
 
+        // The snapshot is the host's whole run tab, so it REPLACES ours - a joiner who still has rows
+        // from an earlier room would otherwise carry strangers onto the new crew's leaderboard, and
+        // their totals into Proof. Confirmed drinks are local and survive, so a re-applied snapshot
+        // never tells anyone to re-drink what they already took.
         public static void ApplyRunSnapshot(string data)
         {
+            var drunkBefore = new Dictionary<string, int>();
+            foreach (var kv in _run) drunkBefore[kv.Key] = kv.Value.Drunk;
+            _run.Clear();
+
             if (string.IsNullOrEmpty(data)) return;
             foreach (var entry in data.Split(';'))
             {
@@ -223,10 +231,12 @@ namespace PourDecisions.Services
                 string steamID = entry.Substring(0, eq);
                 if (!int.TryParse(entry.Substring(eq + 1, tl - eq - 1), out int total)) continue;
                 string name = Unescape(entry.Substring(tl + 1));
-                // Preserve any drinks already confirmed locally (guards a re-applied snapshot, e.g.
-                // host migration) so a player isn't told to re-drink what they've taken.
-                int drunk = _run.TryGetValue(steamID, out var existing) ? existing.Drunk : 0;
-                _run[steamID] = new Tab { Name = name, Total = total, Drunk = drunk };
+                _run[steamID] = new Tab
+                {
+                    Name = name,
+                    Total = total,
+                    Drunk = drunkBefore.TryGetValue(steamID, out int d) ? d : 0,
+                };
             }
         }
 
