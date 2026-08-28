@@ -107,13 +107,6 @@ namespace PourDecisions.Services
         public static int DrunkFor(string steamID) => _run.TryGetValue(steamID, out var t) ? t.Drunk : 0;
         public static int LocalDrunk() => DrunkFor(LocalSteamID());
 
-        public static int LocalOwed()
-        {
-            if (!_run.TryGetValue(LocalSteamID(), out var t)) return 0;
-            int owed = t.Total - t.Drunk;
-            return owed > 0 ? owed : 0;
-        }
-
         // Mark one owed drink as taken. Returns true if there was something to confirm.
         public static bool ConfirmOne()
         {

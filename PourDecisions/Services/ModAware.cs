@@ -35,9 +35,8 @@ namespace PourDecisions.Services
             return false;
         }
 
-        // Convenience groups used by the line/reaction layer.
+        // Convenience group used by the line/reaction layer.
         internal static bool CartOrExtraction => Has("cart", "extraction", "confirmbutton");
-        internal static bool LateJoin => Has("latejoin");
 
         // Any mod that makes the run easier / cheatier - drives the self-aware "are we even playing" pool.
         internal static bool EasyMode => Has(
