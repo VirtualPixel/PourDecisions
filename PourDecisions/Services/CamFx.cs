@@ -9,9 +9,17 @@ namespace PourDecisions.Services
     {
         private static bool On => PluginConfig.CameraEffects.Value;
 
-        public static void Confirm() { if (On) CameraGlitch.Instance?.PlayUpgrade(); }   // glitch + reward chime + shake
-        public static void Tiny()    { if (On) CameraGlitch.Instance?.PlayTiny(); }
-        public static void Short()   { if (On) CameraGlitch.Instance?.PlayShort(); }
-        public static void Long()    { if (On) CameraGlitch.Instance?.PlayLong(); }
+        // CameraGlitch lives in the scene and never clears its static on destroy, so between scenes
+        // the reference points at a dead object. Unity's == catches that; ?. would not.
+        private static CameraGlitch? Live()
+        {
+            var g = CameraGlitch.Instance;
+            return g != null ? g : null;
+        }
+
+        public static void Confirm() { if (On) Live()?.PlayUpgrade(); }   // glitch + reward chime + shake
+        public static void Tiny()    { if (On) Live()?.PlayTiny(); }
+        public static void Short()   { if (On) Live()?.PlayShort(); }
+        public static void Long()    { if (On) Live()?.PlayLong(); }
     }
 }

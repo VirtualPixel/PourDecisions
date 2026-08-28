@@ -304,7 +304,10 @@ namespace PourDecisions.Services
         // Goes everywhere: the truck terminal (game RPC) AND the on-screen feed (host local + our RPC).
         private static void Broadcast(string name, string line)
         {
-            TruckScreenText.instance?.MessageSendCustom(name, line, 0);
+            // Unity null check on purpose: the screen's static instance is never cleared, so between
+            // scenes it points at a destroyed object that ?. would happily call into.
+            var screen = TruckScreenText.instance;
+            if (screen != null) screen.MessageSendCustom(name, line, 0);
             DrinkHud.Instance?.AddDrunkFeed(name, line);
             PourNet.SendDrunkText(name, line);
         }
