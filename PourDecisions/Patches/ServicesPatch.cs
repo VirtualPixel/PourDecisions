@@ -40,8 +40,17 @@ namespace PourDecisions.Patches
         }
     }
 
-    // (Run reset moved to RuleEngine.OnRunReset, fired when you return to the real lobby - the tab is
-    // run-long and persists across levels, the shop, and the truck.)
+    // A new run starts. ResetProgress is the game's own "wipe the run" call: every start-a-game path in
+    // the menu goes through it, and so does the arena when the crew has wiped. Watching the lobby menu
+    // instead used to miss singleplayer entirely - a solo wipe drops you straight back into a fresh level
+    // (RunManager.ChangeLevel), never the lobby menu, so the tab, first blood and the results splash rode
+    // from one run into the next until you quit the game.
+    [HarmonyPatch(typeof(RunManager), nameof(RunManager.ResetProgress))]
+    internal static class RunResetPatch
+    {
+        [HarmonyPostfix]
+        public static void Postfix() => RuleEngine.OnRunReset();
+    }
 
     // The results screen: show the run's Bar Tab leaderboard once, in the native popup.
     [HarmonyPatch(typeof(GameDirector), "gameStateResult")]

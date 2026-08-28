@@ -175,7 +175,8 @@ namespace PourDecisions.UI
         }
 
         // Cheap once-per-level edge. Resets per-level state, sobers the terminal a touch when a new
-        // level starts, and (host) reads the tab recap when you reach the truck.
+        // level starts, and (host) reads the tab recap when you reach the truck. The run-long reset is
+        // not here: it hangs off RunManager.ResetProgress (see RunResetPatch).
         private void DetectLevelChange()
         {
             var rm = RunManager.instance;
@@ -187,10 +188,6 @@ namespace PourDecisions.UI
             RuleEngine.OnNewLevel();
             DrunkTexts.ResetLevel();
             Sfx.ResetLevelSearch();   // let a cocktail that spawns on this level get picked up for the drink SFX
-
-            // Back in the REAL lobby (pre-game / where new players join) = a new run - wipe the tab.
-            // The truck "lobby" between levels does NOT reset; the tab is run-long.
-            if (SemiFunc.RunIsLobbyMenu()) RuleEngine.OnRunReset();
 
             if (SemiFunc.RunIsLevel())
             {
