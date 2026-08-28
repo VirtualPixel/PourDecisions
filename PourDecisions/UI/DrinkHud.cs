@@ -34,7 +34,7 @@ namespace PourDecisions.UI
 
         // Stacking "why" toasts (newest on top), floating + fading like an upgrade pickup.
         private readonly List<Toast> _toasts = new();
-        private const float ToastLife = 4.5f;
+        private static float ToastLife => PluginConfig.PromptSeconds.Value;   // "Prompt time" in the config
         private const float ToastSpacing = 26f;
         private const float ToastBaseY = -190f;
         private const int ToastMax = 6;
@@ -384,11 +384,12 @@ namespace PourDecisions.UI
         private void UpdateToasts()
         {
             bool hidden = !_hudVisible || !PluginConfig.Enabled.Value;
+            float life = ToastLife;
             for (int i = _toasts.Count - 1; i >= 0; i--)
             {
                 var t = _toasts[i];
                 t.Age += Time.deltaTime;
-                if (t.Tmp == null || t.Age >= ToastLife)
+                if (t.Tmp == null || t.Age >= life)
                 {
                     if (t.Tmp != null) Destroy(t.Tmp.gameObject);
                     _toasts.RemoveAt(i);
@@ -401,7 +402,7 @@ namespace PourDecisions.UI
 
                 float a = 1f;
                 if (t.Age < 0.2f) a = t.Age / 0.2f;                       // fade in
-                else if (t.Age > ToastLife - 0.8f) a = (ToastLife - t.Age) / 0.8f;  // fade out
+                else if (t.Age > life - 0.8f) a = (life - t.Age) / 0.8f;  // fade out
                 t.Tmp.alpha = hidden ? 0f : Mathf.Clamp01(a);
             }
         }

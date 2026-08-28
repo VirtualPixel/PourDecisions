@@ -117,7 +117,7 @@ namespace PourDecisions.Configuration
             TaxmanReactions = config.Bind(SDisplay, "Taxman terminal reactions", true, "The Taxman posts emoji and a tab recap on the terminal.");
             DrunkTexts = config.Bind(SDisplay, "Drunk texts", true, "Drunk Semibots fire off slurred messages on screen, more often the more they've had.");
             UseChatBox = config.Bind(SDisplay, "Use ChatBox for drunk texts", true, "If the ChatBox mod is installed, show drunk texts in its chat UI instead of the built-in feed.");
-            PromptSeconds = config.Bind(SDisplay, "Prompt time (seconds)", 4f, new ConfigDescription(
+            PromptSeconds = config.Bind(SDisplay, "Prompt time (seconds)", 4.5f, new ConfigDescription(
                 "How long a drink prompt stays up.", new AcceptableValueRange<float>(1.5f, 10f)));
             TeamSplash = config.Bind(SDisplay, "Big splash for team drinks", true, "Use the center splash for everyone-drinks moments.");
             Sound = config.Bind(SDisplay, "Sound", true, "Play game sounds with prompts.");
