@@ -360,7 +360,7 @@ namespace PourDecisions.Services
                     string save = line.Substring(0, bar);
                     string steamID = line.Substring(bar + 1, eq - bar - 1);
                     if (!int.TryParse(line.Substring(eq + 1, tl - eq - 1), out int drinks)) continue;
-                    string name = line.Substring(tl + 1);
+                    string name = Unescape(line.Substring(tl + 1));   // SaveSaves writes it escaped
                     if (!_saveLedger.TryGetValue(save, out var book)) { book = new Dictionary<string, SaveEntry>(); _saveLedger[save] = book; }
                     book[steamID] = new SaveEntry { Drinks = drinks, Name = name };
                 }
