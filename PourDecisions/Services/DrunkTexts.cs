@@ -73,7 +73,11 @@ namespace PourDecisions.Services
         // Host only. Call each frame; it self-throttles per player and globally.
         public static void Tick()
         {
-            if (!PluginConfig.DrunkTexts.Value || !SemiFunc.IsMasterClientOrSingleplayer()) return;
+            // RunManager is what every RunIs* helper dereferences, and this runs from a
+            // DontDestroyOnLoad Update that can start before it exists.
+            if (RunManager.instance == null) return;
+            if (!PluginConfig.Enabled.Value || !PluginConfig.DrunkTexts.Value) return;
+            if (!SemiFunc.IsMasterClientOrSingleplayer()) return;
 
             DrainReplies();   // fire any clapbacks whose delay has elapsed
 
