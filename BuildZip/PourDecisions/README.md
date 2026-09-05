@@ -2,6 +2,8 @@
 
 Bad calls, worse hangovers.
 
+> New builds and fixes land in [Vippy's Discord](https://discord.gg/kKqhck2NrP) before they hit Thunderstore. Come hang out.
+
 A drinking game built into R.E.P.O. You still run the job, but now every bit of bad luck costs you. Die, get grabbed, smash a fat valuable, blow the quota, shoot a teammate, and somebody owes a drink. The Taxman keeps the tab and the whole crew can see who's falling behind.
 
 **Everyone in the lobby needs it installed. The host sets the rules.**
@@ -48,13 +50,22 @@ There's also a small drink-responsibly notice on startup. It nudges a little har
 - Plays fine with REPOLib mods; it registers nothing of its own.
 - Everyone in the lobby should be on the same version. 1.0.1 renamed the internal messages, so a 1.0.0 client in a 1.0.1 room won't get the drinks.
 
-## Contact
+## Come hang out
 
-| Purpose | Where |
+I'm Vippy. I make R.E.P.O. mods and I read every bug report.
+
+| | |
 |---|---|
-| Bug reports and suggestions | [GitHub Issues](https://github.com/VirtualPixel/PourDecisions/issues) |
-| Questions, test builds, or just hanging out | [Vippy's Discord](https://discord.gg/kKqhck2NrP) |
-| R.E.P.O. modding in general | [R.E.P.O. Modding Server](https://discord.gg/9fDzZ9sk95) |
+| **[Vippy's Discord](https://discord.gg/kKqhck2NrP)** | Test builds land here before Thunderstore, you get a say in what comes next, and it's the fastest way to get a bug fixed. Come say hi. |
+| **[GitHub Issues](https://github.com/VirtualPixel/PourDecisions/issues)** | Bug reports and ideas that deserve a paper trail. |
+| **[R.E.P.O. Modding Server](https://discord.gg/9fDzZ9sk95)** | The whole modding scene, not just me. |
+| **[More of my mods](https://thunderstore.io/c/repo/p/Vippy/)** | Everything else I've made for R.E.P.O. |
 
-Everything I make stays free. If one of these mods made your runs better and you feel like
-saying thanks, there is a [Ko-fi](https://ko-fi.com/vippydev).
+## Keep the mods coming
+
+Everything I make is free and stays free. Two ways to help if you feel like it, neither one expected:
+
+- **[Ko-fi](https://ko-fi.com/vippydev)**: buy me a coffee and your name goes on the supporters list in my Discord. Every coffee buys another evening on the next update.
+- **[BisectHosting](https://bisecthosting.com/vippy)**: hosting a server for Minecraft or anything else your crew plays? Code `vippy` takes 25% off, and I get a cut at no cost to you. It's where my own servers live.
+
+[![25% off BisectHosting servers with code vippy](https://www.bisecthosting.com/partners/custom-banners/71eecea6-f5bb-437d-ac56-f6fee4266193.png)](https://bisecthosting.com/vippy)
