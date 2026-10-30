@@ -2,7 +2,9 @@
 
 Bad calls, worse hangovers.
 
-> New builds and fixes land in [Vippy's Discord](https://discord.gg/kKqhck2NrP) before they hit Thunderstore. Come hang out.
+> **A note from Vippy**
+>
+> After way too long of a break, I'm finally back and working on these again :D Every one of my mods just got a full pass: bugs fixed, reports read, a few things I'd always meant to do. New builds and fixes land in [Vippy's Discord](https://discord.gg/kKqhck2NrP) before they hit Thunderstore, so come hang out. Thanks for sticking around.
 
 A drinking game built into R.E.P.O. You still run the job, but now every bit of bad luck costs you. Die, get grabbed, smash a fat valuable, blow the quota, shoot a teammate, and somebody owes a drink. The Taxman keeps the tab and the whole crew can see who's falling behind.
 

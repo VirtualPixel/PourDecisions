@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2
+
+- Updated for the 0.5 game build. Drinks and the tab work the same.
+
 ## 1.0.1
 
 - The wipe drink never actually fired. It was hanging off a message the host never
